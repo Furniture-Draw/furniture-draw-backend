@@ -1,6 +1,6 @@
 package com.sargintek.furniture_draw_backend.authentication_service.services;
 
-<<<<<<< HEAD
+
 import com.sargintek.furniture_draw_backend.authentication_service.entity.Entity;
 import com.sargintek.furniture_draw_backend.authentication_service.repository.UserRepositoryy;
 import org.springframework.stereotype.Service;
@@ -46,45 +46,21 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(newUser);
 
         return "Kayıt başarılı!";
-=======
-import org.springframework.stereotype.Service;
 
-@Service
-public class AuthServiceImpl implements AuthService {
-    @Override
-    public String login(String username, String password) {
-        return username + " " + password;
-    }
-
-    @Override
-    public String register(String username, String password) {
-        return "";
->>>>>>> 946c2f699ce48a2078b29f19f51e702a9dbb372c
     }
 
     @Override
     public String logout(String token) {
-<<<<<<< HEAD
-        return "Çıkış başarılı.";
+        return "";
     }
 
     @Override
     public String forgotPassword(String email) {
-        return "Şifre sıfırlama talebi alındı: " + email;
-    }
-
-    public List<Entity> getAllUsers() {
-        List<Entity> users = userRepository.findAll();
-        return users.isEmpty() ? Collections.emptyList() : users;
-    }
-
-=======
         return "";
     }
 
     @Override
-    public String forgotPassword(String username) {
-        return "";
+    public List<Entity> getAllUsers() {
+        return List.of();
     }
->>>>>>> 946c2f699ce48a2078b29f19f51e702a9dbb372c
 }

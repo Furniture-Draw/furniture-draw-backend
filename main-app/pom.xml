@@ -11,11 +11,9 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-<<<<<<< HEAD
+
         <java.version>17</java.version>
-=======
-        <java.version>23</java.version>
->>>>>>> 946c2f699ce48a2078b29f19f51e702a9dbb372c
+
     </properties>
 
     <dependencies>
