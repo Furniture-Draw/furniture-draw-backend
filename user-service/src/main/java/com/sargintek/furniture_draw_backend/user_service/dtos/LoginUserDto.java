@@ -1,4 +1,4 @@
-package com.sargintek.furniture_draw_backend.authentication_service.dtos;
+package com.sargintek.furniture_draw_backend.user_service.dtos;
 
 
 public record LoginUserDto(String email, String password) {

@@ -22,5 +22,10 @@
             <artifactId>authentication-service</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sargintek</groupId>
+            <artifactId>user-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

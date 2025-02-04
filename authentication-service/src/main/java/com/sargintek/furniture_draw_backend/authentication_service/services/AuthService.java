@@ -1,7 +1,7 @@
 package com.sargintek.furniture_draw_backend.authentication_service.services;
 
 
-import com.sargintek.furniture_draw_backend.authentication_service.entity.Entity;
+import com.sargintek.furniture_draw_backend.user_service.entity.Entity;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ public interface AuthService {
     String logout(String token);
     String forgotPassword(String email);
     List<Entity> getAllUsers();
+    boolean existsByEmail(String email);
 
 
 

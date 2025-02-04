@@ -1,44 +1,52 @@
 package com.sargintek.furniture_draw_backend.authentication_service.services;
 
-
-import com.sargintek.furniture_draw_backend.authentication_service.entity.Entity;
-import com.sargintek.furniture_draw_backend.authentication_service.repository.UserRepositoryy;
+import com.sargintek.furniture_draw_backend.user_service.entity.Entity;
+import com.sargintek.furniture_draw_backend.user_service.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final UserRepositoryy userRepository;
+    private final UserRepository userRepository;
     private final PasswordService passwordService;
 
-    public AuthServiceImpl(UserRepositoryy userRepository, PasswordService passwordService) {
+
+    public AuthServiceImpl(UserRepository userRepository, PasswordService passwordService) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
+
     }
 
     @Override
-    public String login(String email, String password) {
-        Optional<Entity> userOptional = userRepository.findByEmail(email);
+    public String login(String email, String rawPassword) {
+        try {
+            // Find user by email
+            Entity user = userRepository.findByEmail(email)
+                    .orElse(null);
 
-        if (userOptional.isEmpty()) {
-            return "Kullanıcı bulunamadı!";
-        }
+            if (user == null) {
+                return "Invalid email or password.";
+            }
 
-        Entity user = userOptional.get();
-        if (passwordService.matches(password, user.getPassword())) {
-            return "Giriş başarılı!";
-        } else {
-            return "Şifre hatalı!";
+            String encodedPassword = user.getPassword();
+
+            boolean isPasswordMatch = passwordService.matches(rawPassword, encodedPassword);
+
+            if (!isPasswordMatch) {
+                return "Invalid email or password.";
+            }
+
+            return "Login successful";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Login failed. Please try again.";
         }
     }
-
     @Override
     public String register(String username, String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
-            return "Bu e-posta zaten kayıtlı!";
+            return "This email is already registered!";
         }
 
         String encodedPassword = passwordService.encodePassword(password);
@@ -46,8 +54,8 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(newUser);
 
         return "Kayıt başarılı!";
-
     }
+
 
     @Override
     public String logout(String token) {
@@ -61,6 +69,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public List<Entity> getAllUsers() {
-        return List.of();
+        return userRepository.findAll();
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }
+
+

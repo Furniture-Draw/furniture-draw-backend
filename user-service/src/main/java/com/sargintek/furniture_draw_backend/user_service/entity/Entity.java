@@ -1,4 +1,4 @@
-package com.sargintek.furniture_draw_backend.authentication_service.entity;
+package com.sargintek.furniture_draw_backend.user_service.entity;
 
 import jakarta.persistence.*;
 

@@ -6,15 +6,7 @@
         <artifactId>furniture-draw-backend</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>authentication-service</artifactId>
-    <name>Authentication Service</name>
+    <artifactId>user-service</artifactId>
+    <name>Archetype - user-service</name>
     <url>http://maven.apache.org</url>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.sargintek</groupId>
-            <artifactId>user-service</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 </project>
