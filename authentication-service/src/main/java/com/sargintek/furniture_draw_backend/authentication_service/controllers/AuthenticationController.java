@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -67,7 +68,7 @@ public class AuthenticationController {
                 return ResponseEntity.ok("Bu e-posta ile daha önce kayıt olunmuş.");
             }
 
-            authService.register(googleUser.username(), googleUser.email(), ""); // Google ile şifre gereksiz
+            authService.register(googleUser.username(), googleUser.email(), "");
 
             return ResponseEntity.ok("Google ile kayıt başarılı!");
         } catch (Exception e) {
@@ -78,5 +79,36 @@ public class AuthenticationController {
     @GetMapping("/users")
     public List<Entity> getAllUsers() {
         return authService.getAllUsers();
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody String emailString) {
+        // Trim and remove any potential quotes
+        String email = emailString.trim().replace("\"", "");
+
+        if (email.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required");
+        }
+
+        String result = authService.forgotPassword(email);
+
+        if (result.equals("Reset link has been sent to your email.")) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+    }
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(
+            @RequestBody Map<String, String> payload
+    ) {
+        String email = payload.get("email");
+        String token = payload.get("token");
+        String newPassword = payload.get("newPassword");
+
+        String result = authService.resetPassword(email, token, newPassword);
+        return ResponseEntity.ok(result);
     }
 }

@@ -14,6 +14,7 @@ public interface AuthService {
     String forgotPassword(String email);
     List<Entity> getAllUsers();
     boolean existsByEmail(String email);
+    String resetPassword(String email, String token, String newPassword);
 
 
 
